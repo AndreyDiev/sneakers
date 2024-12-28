@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthPage from "./components/auth-page/AuthPage";
+import AddPage from "./components/add-page/AddPage";
 
 const router = createBrowserRouter(
   [
@@ -15,6 +16,10 @@ const router = createBrowserRouter(
       path: "/",
       element: <App />,
     },
+    {
+      path: "/add",
+      element: <AddPage />
+    }
   ],
   {
     future: {
