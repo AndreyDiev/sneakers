@@ -85,7 +85,7 @@ export function AddPage() {
             sx={{ width: "33%" }}
           />
         </div>
-        <FormControl variant="filled" sx={{ width: "66%", m: '0 18px 24px 0' }}>
+        <FormControl variant="filled" sx={{ width: '100%', mb: '18px' }}>
           <InputLabel htmlFor="filled-adornment-amount">Цена</InputLabel>
           <FilledInput
             id="filled-adornment-amount"
@@ -93,7 +93,7 @@ export function AddPage() {
           />
         </FormControl>
         <FormControlLabel
-        sx={{height: '56px'}}
+        sx={{height: '56px', mb: '18px', ml: '2px'}}
           control={
             <Checkbox
               checked={fitting}
