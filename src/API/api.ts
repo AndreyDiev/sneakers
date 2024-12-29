@@ -1,5 +1,5 @@
 export interface LoginDto {
-    login: string;
+    telegram: string;
     password: string;
 }
 
@@ -27,6 +27,17 @@ export class Api {
       //window.location.reload();
     }
     throw new Error(res.statusText);
+  }
+
+  async createSneakersLot(data: any) {
+    return fetch(this.URL + '/sneakers/sneakers', {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        token: this.token ?? ''
+      },
+    })
   }
 }
 

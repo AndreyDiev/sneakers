@@ -23,7 +23,7 @@ const AuthPage: FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signIn({ login, password })
+    signIn({ telegram: login, password: password })
       .then(() => {
         setIsAuth(true);
         window.location.reload();
@@ -35,7 +35,10 @@ const AuthPage: FC = () => {
   };
 
   const clickSubmit = () => {
-    signIn({ login, password })
+    signIn({
+      telegram: login,
+      password: password,
+    })
       .then(() => {
         setIsAuth(true);
         window.location.reload();
@@ -44,7 +47,7 @@ const AuthPage: FC = () => {
         console.log(er);
         setError("Неправильный логин или пароль");
       });
-  }
+  };
 
   return (
     <div className="wrapper">
@@ -84,7 +87,9 @@ const AuthPage: FC = () => {
             label="Пароль"
             sx={{ width: "80%" }}
           ></TextField>
-          <Button variant="contained" onClick={clickSubmit}>Войти</Button>
+          <Button variant="contained" onClick={clickSubmit}>
+            Войти
+          </Button>
           {error && <p style={{ color: "red" }}>{error}</p>}
         </form>
       </Card>
