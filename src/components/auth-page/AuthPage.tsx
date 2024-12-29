@@ -1,7 +1,8 @@
 import { Box, Stack, Typography, TextField, Button, Card } from "@mui/material";
 import { FC, useState } from "react";
 import { Navigate } from "react-router-dom";
-import './style.css';
+import "./style.css";
+import api, { LoginDto } from "../../API/api";
 
 const AuthPage: FC = () => {
   const [login, setLogin] = useState("");
@@ -12,29 +13,38 @@ const AuthPage: FC = () => {
     Boolean(localStorage.getItem("access-token"))
   );
 
-  //   async function signIn(cred: SignupDto) {
-  //     return api
-  //       .login(cred)
-  //       .then((auth) => {
-  //         console.log(auth)
-  //         setIsAuth(Boolean(auth.token));
-  //         localStorage.setItem("access-token", auth.token);
-  //       })
-  //   }
+  async function signIn(cred: LoginDto) {
+    return api.login(cred).then((auth) => {
+      console.log(auth);
+      setIsAuth(Boolean(auth.token));
+      localStorage.setItem("access-token", auth.token);
+    });
+  }
 
-  //   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault();
-  //     signIn({ login, password })
-  //       .then(() => {
-  //         window.location.reload();
-  //       })
-  //       .catch((er) => {
-  //         console.log(er);
-  //         setError('Неправильный логин или пароль')
-  //       });
-  //   };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    signIn({ login, password })
+      .then(() => {
+        setIsAuth(true);
+        window.location.reload();
+      })
+      .catch((er) => {
+        console.log(er);
+        setError("Неправильный логин или пароль");
+      });
+  };
 
-  //if (isAuth) return <Navigate to="/" replace={true} />
+  const clickSubmit = () => {
+    signIn({ login, password })
+      .then(() => {
+        setIsAuth(true);
+        window.location.reload();
+      })
+      .catch((er) => {
+        console.log(er);
+        setError("Неправильный логин или пароль");
+      });
+  }
 
   return (
     <div className="wrapper">
@@ -49,6 +59,7 @@ const AuthPage: FC = () => {
         }}
       >
         <form
+          onSubmit={handleSubmit}
           style={{
             height: "100%",
             display: "flex",
@@ -60,16 +71,21 @@ const AuthPage: FC = () => {
         >
           <Typography variant="h2">SNEAKERS</Typography>
           <TextField
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
             variant="filled"
             label="Логин"
             sx={{ width: "80%" }}
           ></TextField>
           <TextField
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             variant="filled"
             label="Пароль"
             sx={{ width: "80%" }}
           ></TextField>
-          <Button variant="contained">Войти</Button>
+          <Button variant="contained" onClick={clickSubmit}>Войти</Button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
         </form>
       </Card>
     </div>

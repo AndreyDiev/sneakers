@@ -13,6 +13,7 @@ import {
 import "./style.css";
 import DoNotStepIcon from "@mui/icons-material/DoNotStep";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 interface CreateSneakersLot {
   brand: string;
@@ -37,6 +38,8 @@ export function AddPage() {
   const handleChangefitting = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFitting(event.target.checked);
   };
+
+  if (!localStorage.getItem('token')) return <Navigate to='login' />
 
   return (
     <Card
